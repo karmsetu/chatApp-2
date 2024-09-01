@@ -5,4 +5,4 @@ const URL =
     // import.meta.env.NODE_ENV === 'production' ? undefined :
     'http://localhost:3000';
 
-export const socket = io(URL, { autoConnect: true });
+export const socket = io(URL, { autoConnect: false });

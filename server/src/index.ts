@@ -15,6 +15,8 @@ app.get('/', (req, res) => {
     res.send('<h1>Hello world</h1>');
 });
 
+// ? https://stackoverflow.com/questions/32674391/io-emit-vs-socket-emit#:~:text=emit()%3B%20%2F%2Fsend%20to%20all%20connected%20clients%20except%20the,to%20execute%20on%20server%20io.
+
 io.on('connection', (socket) => {
     //making connection
     console.log(`a user connected: ${socket.id} `);
@@ -23,10 +25,19 @@ io.on('connection', (socket) => {
         console.log(`user with id:${socket.id} disconnected`);
     });
 
-    socket.on('chat_message', (msg) => {
-        //recieving message
-        socket.broadcast.emit('chat_message', msg);
-        console.log('message: ' + msg);
+    socket.on('join_room', ({ name, room }, callback) => {
+
+            socket.join(room);
+
+            // socket.emit(`${name} has joined!`);
+            io.in(room).emit('server_message', `${name} has joined`);
+        socket.on('chat_message', (msg) => {
+            //recieving message
+            socket.broadcast.to(room).emit('chat_message', msg);
+            console.log('message: ' + msg);
+        });
+
+        // callback();
     });
 });
 
