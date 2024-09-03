@@ -1,0 +1,44 @@
+.join-form-container {
+    background: #161d6f;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.join-form {
+    margin: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    margin: 7px;
+}
+
+.join-chat-button {
+    padding: 4px;
+    text-decoration: none;
+    font-size: x-large;
+    color: chartreuse;
+}
+
+.join-chat-button:hover {
+    color: greenyellow;
+}
+
+label {
+    font-family: 'Inter', 'sans-serif';
+    color: rgb(232, 230, 229);
+}
+
+input {
+    border-radius: 5px;
+    border: none;
+    padding: 4px;
+}
+
+input:focus {
+    border: none;
+}

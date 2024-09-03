@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { socket } from './socket';
+import './css/join.css';
 
 const Join = () => {
     const [formData, setFormData] = React.useState({
@@ -22,28 +23,34 @@ const Join = () => {
     }, []);
 
     return (
-        <div>
-            <form>
-                <label htmlFor="name">name</label>
-                <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    onChange={handleChange}
-                    value={formData.name}
-                />
-                <label htmlFor="room">room</label>
-                <input
-                    type="text"
-                    name="room"
-                    id="room"
-                    onChange={handleChange}
-                    value={formData.room}
-                />
+        <div className="join-form-container">
+            <form className="join-form">
+                <div className="input-field">
+                    <label htmlFor="name">name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        onChange={handleChange}
+                        value={formData.name}
+                    />
+                </div>
 
-                {formData.room.length && (
+                <div className="input-field">
+                    <label htmlFor="room">room</label>
+                    <input
+                        type="text"
+                        name="room"
+                        id="room"
+                        onChange={handleChange}
+                        value={formData.room}
+                    />
+                </div>
+
+                {formData.room && (
                     <Link
                         to={`/chat?name=${formData.name}&room=${formData.room}`}
+                        className="join-chat-button"
                     >
                         join chat
                     </Link>

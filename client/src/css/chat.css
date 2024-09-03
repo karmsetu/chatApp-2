@@ -1,0 +1,38 @@
+.chat-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat-input {
+    display: flex;
+    /* position: absolute; */
+    /* bottom: 0; */
+    margin: 4px;
+    padding: 4px;
+}
+
+.chat-messages {
+    height: 90%;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.self-message {
+    padding: 4px;
+    background-color: lightseagreen;
+    border: 1px solid black;
+}
+
+.user-message {
+    padding: 4px;
+    background-color: gainsboro;
+    border: 1px solid black;
+}
+
+.server-message {
+    padding: 4px;
+    background-color: bisque;
+    border: 1px solid black;
+}

@@ -2,6 +2,7 @@ import express from 'express';
 import { createServer } from 'node:http';
 import { PORT } from './constants';
 import { Server } from 'socket.io';
+import { addUser } from '../database';
 
 const app = express();
 const server = createServer(app);
@@ -21,19 +22,29 @@ io.on('connection', (socket) => {
     //making connection
     console.log(`a user connected: ${socket.id} `);
 
-    socket.on('disconnect', () => {
-        console.log(`user with id:${socket.id} disconnected`);
-    });
-
     socket.on('join_room', ({ name, room }, callback) => {
+        socket.on('disconnect', () => {
+            io.in(room).emit('server_message', { user: name, event: 'left' });
+            console.log(`user with id:${socket.id} disconnected`);
+        });
+        console.log({ name, room });
+
+        const res = addUser(name, room, socket.id);
+        // if (res?.error) callback(res.error);
+
+        if (!res?.error) {
+            console.log(`user with id:${socket.id} has joined room:${room}`);
 
             socket.join(room);
 
             // socket.emit(`${name} has joined!`);
-            io.in(room).emit('server_message', `${name} has joined`);
+            io.in(room).emit('server_message', { user: name, event: 'joined' });
+        }
         socket.on('chat_message', (msg) => {
             //recieving message
-            socket.broadcast.to(room).emit('chat_message', msg);
+            socket.broadcast
+                .to(room)
+                .emit('message', { userName: name, body: msg });
             console.log('message: ' + msg);
         });
 
